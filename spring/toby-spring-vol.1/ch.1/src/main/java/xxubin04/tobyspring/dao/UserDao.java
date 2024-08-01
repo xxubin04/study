@@ -8,7 +8,7 @@ public class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");  // MySQL JDBC 드라이버 로드
         Connection c = DriverManager.getConnection(  // DB 연결
-                "jdbc:mysql://localhost:3306/study_db", "root", "sillysally5009!");
+                "jdbc:mysql://localhost:3306/study_db", "root", "1234");
         PreparedStatement ps = c.prepareStatement(
                 "INSERT INTO USERS(id, name, password) VALUES(?,?,?)");
         ps.setString(1, user.getId());
@@ -25,7 +25,7 @@ public class UserDao {
     public User get(String id) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/study_db", "root", "sillysally5009!");
+                "jdbc:mysql://localhost:3306/study_db", "root", "1234");
 
         PreparedStatement ps = c.prepareStatement(  // SQL 문 준비 및 실행
                 "select * from users where id = ?");
