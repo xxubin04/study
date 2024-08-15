@@ -1,6 +1,6 @@
 package ch03_operator;
 
-public class Exercise3_8 {
+public class Exercise3_08 {
     public static void main(String[] args) {
         byte a = 10;
         byte b = 20;
