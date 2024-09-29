@@ -4,36 +4,35 @@
 #include <vector>
 
 using namespace std;
-// ÇÑ Ä­ ¶ç¾î¾²±â ÀÌ½´ °íÄ¡±â
 
 int main() {
 	string word;
 	vector<string> v;
 	cin >> word;
 
-	// ÀÔ·Â¹ŞÀº ¹®ÀÚ¿­ÀÎ word°¡ "exit"ÀÌ ¾Æ´Ñ µ¿¾È
+	// ì…ë ¥ë°›ì€ ë¬¸ìì—´ì¸ wordê°€ "exit"ì´ ì•„ë‹Œ ë™ì•ˆ
 	while (word != "exit") {
 		 
-		// word°¡ ÀÌ¹Ì vector¿¡ ÀúÀåµÇ¾î ÀÖ´Ù¸é,
-		// vector¿¡ ¹®ÀÚ¿­ word ÀúÀåÇÏ°í »çÀü¼øÀ¸·Î Á¤·Ä
+		// wordê°€ ì´ë¯¸ vectorì— ì €ì¥ë˜ì–´ ìˆë‹¤ë©´,
+		// vectorì— ë¬¸ìì—´ word ì €ì¥í•˜ê³  ì‚¬ì „ìˆœìœ¼ë¡œ ì •ë ¬
 		if (find(v.begin(), v.end(), word) == v.end()) {
 			v.push_back(word);
 			sort(v.begin(), v.end());
 		}
-		// word°¡ vector¿¡ ÀúÀåµÇ¾î ÀÖÁö ¾Ê´Ù¸é, vector¿¡¼­ word¸¦ »èÁ¦
+		// wordê°€ vectorì— ì €ì¥ë˜ì–´ ìˆì§€ ì•Šë‹¤ë©´, vectorì—ì„œ wordë¥¼ ì‚­ì œ
 		else {  
 			/*remove(v.begin(), v.end(), word);*/
 			for (auto it = v.begin(); it != v.end(); it++) {
-				if (*it == word && it != v.end() - 1)  // vector³»ºÎ ¹®ÀÚ¿­ÀÌ wordÀÌ¸é¼­, ¸¶Áö¸· ¿ø¼Ò°¡ ¾Æ´Ï¶ó¸é
-					it = v.erase(it);  // it = ³ÖÀ¸´Ï±î µÇ´Â ÀÌÀ¯?
-				else if (*it == word && it == v.end() - 1) {  // vector ³»ºÎ ¹®ÀÚ¿­ÀÌ wordÀÌ¸é¼­, ¸¶Áö¸· ¿ø¼Ò¶ó¸é
+				if (*it == word && it != v.end() - 1)  // vectorë‚´ë¶€ ë¬¸ìì—´ì´ wordì´ë©´ì„œ, ë§ˆì§€ë§‰ ì›ì†Œê°€ ì•„ë‹ˆë¼ë©´
+					it = v.erase(it);  // it = ë„£ìœ¼ë‹ˆê¹Œ ë˜ëŠ” ì´ìœ ?
+				else if (*it == word && it == v.end() - 1) {  // vector ë‚´ë¶€ ë¬¸ìì—´ì´ wordì´ë©´ì„œ, ë§ˆì§€ë§‰ ì›ì†Œë¼ë©´
 					v.erase(it);
 					break;
 				}
 			}
 		}
 
-		// vector ³»ºÎÀÇ ¿ø¼ÒµéÀ» Â÷·Ê´ë·Î Ãâ·Â 
+		// vector ë‚´ë¶€ì˜ ì›ì†Œë“¤ì„ ì°¨ë¡€ëŒ€ë¡œ ì¶œë ¥ 
 		for (int i = 0; i < v.size(); i++)
 			cout << v[i] << " ";
 
