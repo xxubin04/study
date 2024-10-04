@@ -68,45 +68,63 @@ int main() {
 		else if (command == "save") {
 			save_directory();
 		}
-		else if (command == "search") {  // search Ã³¸® ±â´É 
+		else if (command == "search") {  // search ì²˜ë¦¬ ê¸°ëŠ¥ 
 			getline(cin, arguments);
 			string word_set = trim(arguments);
-			search_words(word_set);  // search_words ÇÔ¼ö È£Ãâ 
+			search_words(word_set);  // search_words í•¨ìˆ˜ í˜¸ì¶œ 
 		}
 	}
 	return 0;
 }
 
-// search_words ÇÔ¼ö 
+// search_words í•¨ìˆ˜ 
 void search_words(string word_set) {
-	map<string, int> words;  // key¿¡´Â °Ë»ö¾î, value¿¡´Â µîÀå¿©ºÎ(µîÀåÇÏ¸é 1, µîÀåÇÏÁö ¾ÊÀ¸¸é 0)¸¦ ÀúÀå
+	map<string, int> words;  // keyì—ëŠ” ê²€ìƒ‰ì–´, valueì—ëŠ” ë“±ì¥ì—¬ë¶€(ë“±ì¥í•˜ë©´ 1, ë“±ì¥í•˜ì§€ ì•Šìœ¼ë©´ 0)ë¥¼ ì €ì¥
 
-	while (word_set.length()) {  // word_setÀº "search A & B & C"¿¡¼­ "A & B & C" ¹®ÀÚ¿­À» ÀúÀå
-		if (word_set.find("&") != string::npos) {  // &ÀÌ ÀÖ´Ù¸é (¸¶Áö¸· °Ë»ö¾î°¡ ¾Æ´Ï¶ó¸é)
-			words[word_set.substr(0, word_set.find("&") - 1)] = 0;  // "&" ¾ç ¿·¿¡ °ø¹éÀÌ ÀÖÀ¸¹Ç·Î ÀÎµ¦½º Á¶ÀıÇÏ°í value¿¡ 0À¸·Î ÀúÀå 
-			word_set.erase(0, word_set.find("&") + 2);  // °Ë»ö¾îºÎÅÍ " & "±îÁö Áö¿ò
+	while (word_set.length()) {  // word_setì€ "search A & B & C"ì—ì„œ "A & B & C" ë¬¸ìì—´ì„ ì €ì¥
+		if (word_set.find("&") != string::npos) {  // &ì´ ìˆë‹¤ë©´ (ë§ˆì§€ë§‰ ê²€ìƒ‰ì–´ê°€ ì•„ë‹ˆë¼ë©´)
+			words[word_set.substr(0, word_set.find("&") - 1)] = 0;  // "&" ì–‘ ì˜†ì— ê³µë°±ì´ ìˆìœ¼ë¯€ë¡œ ì¸ë±ìŠ¤ ì¡°ì ˆí•˜ê³  valueì— 0ìœ¼ë¡œ ì €ì¥ 
+			word_set.erase(0, word_set.find("&") + 2);  // ê²€ìƒ‰ì–´ë¶€í„° " & "ê¹Œì§€ ì§€ì›€
 		}
-		else {  // &ÀÌ ¾ø´Ù¸é (¸¶Áö¸· °Ë»ö¾î¶ó¸é)
+		else {  // &ì´ ì—†ë‹¤ë©´ (ë§ˆì§€ë§‰ ê²€ìƒ‰ì–´ë¼ë©´)
 			word_set = trim(word_set);
-			words[word_set] = 0;  // word_set¿¡´Â ¸¶Áö¸· °Ë»ö¾î ÇÏ³ª¸¸ ³²À¸¹Ç·Î ±×´ë·Î 0À¸·Î ÀúÀå
-			word_set = "";  // while¹® Á¶°ÇÀÌ "word_set.length()"ÀÌ¹Ç·Î 0À¸·Î ¸¸µé¾î Å»Ãâ
+			words[word_set] = 0;  // word_setì—ëŠ” ë§ˆì§€ë§‰ ê²€ìƒ‰ì–´ í•˜ë‚˜ë§Œ ë‚¨ìœ¼ë¯€ë¡œ ê·¸ëŒ€ë¡œ 0ìœ¼ë¡œ ì €ì¥
+			word_set = "";  // whileë¬¸ ì¡°ê±´ì´ "word_set.length()"ì´ë¯€ë¡œ 0ìœ¼ë¡œ ë§Œë“¤ì–´ íƒˆì¶œ
 		}
 	}
 
+	// tota = valueë“¤ì˜ í•©ìœ¼ë¡œ í—¤ì„œ ë‹¤ ë“±ì¥í•œ ê²½ìš°ì— ì¶œë ¥
+	// ê¶Œì˜¤í  êµìˆ˜ë‹˜ì˜ bool ì¡°ì–¸ì„ ë°›ê³  ì•„ë˜ ì½”ë“œì²˜ëŸ¼ ìˆ˜ì •í•¨
+	
+	//for (auto p : directory) {
+	//	int total = 0;  // totalì€ ê²€ìƒ‰ì–´ë“¤ì˜ valueë“¤ì˜ í•©
+	//	for (auto i : words)
+	//		i.second = 0;  // ì´ì „ ì‚¬ëŒì˜ ì •ë³´ì—ì„œ ê²€ìƒ‰ì–´ì˜ ë“±ì¥ì—¬ë¶€ë¡œ ê°±ì‹ ë˜ì–´ ìˆìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ë‹¤ì‹œ ì´ˆê¸°í™”
+
+	//	for (auto i : words) {
+	//		string combined_info = p.name + " " + p.address + " " + p.phone + " " + p.email + " " + p.web;  // combined_infoì— ì‚¬ëŒì˜ ëª¨ë“  ì •ë³´ë¥¼ í•©í•´ ë¬¸ìì—´ë¡œ ë§Œë“¦
+	//		if (combined_info.find(i.first) != string::npos)  // ê²€ìƒ‰ì–´ê°€ ì‚¬ëŒì˜ ì •ë³´ ë¬¸ìì—´ì— ë“±ì¥í•œë‹¤ë©´
+	//			i.second = 1;  // í•´ë‹¹ ê²€ìƒ‰ì–´ì˜ valueë¥¼ 1ë¡œ ê°±ì‹ 
+	//		total += i.second;  // totalì— ê²€ìƒ‰ì–´ì˜ valueë¥¼ ë”í•¨
+	//	}
+
+	//	if (total == words.size())  // totalì´ ê²€ìƒ‰ì–´ì˜ ê°œìˆ˜ì™€ ê°™ë‹¤ë©´ (ëª¨ë“  ê²€ìƒ‰ì–´ê°€ ë“±ì¥í•œë‹¤ë©´)
+	//		print_person(p);  // í•´ë‹¹ ì‚¬ëŒì˜ ì •ë³´ë¥¼ ì¶œë ¥ 
+	//}
+
 	for (auto p : directory) {
-		int total = 0;  // totalÀº °Ë»ö¾îµéÀÇ valueµéÀÇ ÇÕ
+		bool check = true;  // ëª¨ë“  ê²€ìƒ‰ì–´ë“¤ ì¤‘ í•˜ë‚˜ë¼ë„ ë“±ì¥í•˜ì§€ ì•Šì•˜ë‹¤ë©´ false
 		for (auto i : words)
-			i.second = 0;  // ÀÌÀü »ç¶÷ÀÇ Á¤º¸¿¡¼­ °Ë»ö¾îÀÇ µîÀå¿©ºÎ·Î °»½ÅµÇ¾î ÀÖÀ¸¹Ç·Î 0À¸·Î ´Ù½Ã ÃÊ±âÈ­
+			i.second = 0;  // ì´ì „ ì‚¬ëŒì˜ ì •ë³´ì—ì„œ ê²€ìƒ‰ì–´ì˜ ë“±ì¥ì—¬ë¶€ë¡œ ê°±ì‹ ë˜ì–´ ìˆìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ë‹¤ì‹œ ì´ˆê¸°í™”
 
 		for (auto i : words) {
-			string combined_info = p.name + " " + p.address + " " + p.phone + " " + p.email + " " + p.web;  // combined_info¿¡ »ç¶÷ÀÇ ¸ğµç Á¤º¸¸¦ ÇÕÇØ ¹®ÀÚ¿­·Î ¸¸µê
-			if (combined_info.find(i.first) != string::npos)  // °Ë»ö¾î°¡ »ç¶÷ÀÇ Á¤º¸ ¹®ÀÚ¿­¿¡ µîÀåÇÑ´Ù¸é
-				i.second = 1;  // ÇØ´ç °Ë»ö¾îÀÇ value¸¦ 1·Î °»½Å
-			total += i.second;  // total¿¡ °Ë»ö¾îÀÇ value¸¦ ´õÇÔ
+			string combined_info = p.name + " " + p.address + " " + p.phone + " " + p.email + " " + p.web;  // combined_infoì— ì‚¬ëŒì˜ ëª¨ë“  ì •ë³´ë¥¼ í•©í•´ ë¬¸ìì—´ë¡œ ë§Œë“¦
+			if (combined_info.find(i.first) == string::npos)  // ê²€ìƒ‰ì–´ê°€ ì‚¬ëŒì˜ ì •ë³´ ë¬¸ìì—´ì— ë“±ì¥í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´
+				check = false;  // checkë¥¼ falseë¡œ ê°±ì‹  
 		}
 
-		if (total == words.size())  // totalÀÌ °Ë»ö¾îÀÇ °³¼ö¿Í °°´Ù¸é (¸ğµç °Ë»ö¾î°¡ µîÀåÇÑ´Ù¸é)
-			print_person(p);  // ÇØ´ç »ç¶÷ÀÇ Á¤º¸¸¦ Ãâ·Â 
+		if (check)  // ëª¨ë“  ê²€ìƒ‰ì–´ê°€ ì „ë¶€ ë“±ì¥í–ˆë‹¤ë©´
+			print_person(p);  // í•´ë‹¹ ì‚¬ëŒì˜ ì •ë³´ë¥¼ ì¶œë ¥ 
 	}
 }
 
